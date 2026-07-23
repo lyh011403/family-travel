@@ -1,0 +1,21 @@
+{
+  "name": "2026 老石人的幸福之旅",
+  "short_name": "家族宜蘭行",
+  "description": "2026/07/25 - 07/27 宜蘭家族三天兩夜旅遊手冊與行程指南",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+  <title>2026 老石人的幸福之旅 | 宜蘭三天兩夜</title>
+  
+  <!-- PWA & Mobile Meta Tags -->
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="家族宜蘭行">
+  <link rel="apple-touch-icon" href="./icon-192.png">
+  
+  <!-- SEO & Description -->
+  <meta name="description" content="2026/07/25 ~ 07/27 老石人的幸福之旅 宜蘭三天兩夜家族旅遊數位指南與離線 PWA 手冊。">
+  
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+  <!-- PWA Install Prompt Banner -->
+  <div id="pwa-banner" class="pwa-banner" style="display: none;">
+    <span>📱 將「家族宜蘭行」新增至手機主畫面，離線也能看行程！</span>
+    <button id="pwa-install-btn" class="pwa-btn">一鍵安裝</button>
+  </div>
+
+  <!-- App Sticky Header -->
+  <header class="app-header">
+    <div class="header-top">
+      <div class="brand-title">
+        老石人的幸福之旅
+        <span class="brand-badge">宜蘭 3天2夜</span>
+      </div>
+      <div class="header-sub">07/25 ~ 07/27</div>
+    </div>
+    
+    <!-- Instant Search Bar -->
+    <div class="search-container">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-input" class="search-input" placeholder="輸入成員姓名搜尋房間、車次與分流..." autocomplete="off">
+      <button id="search-clear" class="search-clear">✕</button>
+    </div>
+  </header>
+
+  <!-- Search Overlay -->
+  <div id="search-results-overlay" class="search-results-overlay">
+    <div class="search-result-title">🔍 姓名搜尋結果</div>
+    <div id="search-results-container"></div>
+  </div>
+
+  <!-- Main View Area -->
+  <main class="main-container">
+    
+    <!-- ==================== TAB 1: ITINERARY (行程) ==================== -->
+    <section id="tab-itinerary" class="tab-content active">
+      
+      <!-- Day Sub-tabs -->
+      <div class="sub-tabs">
+        <button class="sub-tab-btn active" data-day="1">Day 1 (7/25 六)</button>
+        <button class="sub-tab-btn" data-day="2">Day 2 (7/26 日)</button>
+        <button class="sub-tab-btn" data-day="3">Day 3 (7/27 一)</button>
+      </div>
+
+      <!-- DAY 1 CONTENT -->
+      <div id="day-1" class="day-content active">
+        <div class="card">
+          <div class="card-title">🚩 7/25 (六) 集合出發與景點行程</div>
+          
+          <div class="timeline">
+            
+            <div class="timeline-item">
+              <div class="timeline-dot highlight"></div>
+              <div class="timeline-time">08:10 ~ 10:00</div>
+              <div class="timeline-title">接載集合出發</div>
+              <div class="timeline-desc">
+                分定點接送（桃園高鐵、桃園文中路、新埔六街同安公園、松山機場）
+                <a href="#tab-transport" onclick="document.querySelector('.nav-item[data-tab=transport]').click();" style="color:var(--primary); font-weight:700; text-decoration:none;">查看詳細乘車表 →</a>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-time">11:30</div>
+              <div class="timeline-title">午餐：皇家花園礁溪甕仔雞</div>
+              <div class="timeline-desc">已預訂 3 桌（現場點餐）</div>
+              <div class="tag-group">
+                <span class="badge badge-amber">已訂3桌</span>
+                <span class="badge badge-blue">美食饗宴</span>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot highlight"></div>
+              <div class="timeline-time">13:00 ~ 17:30</div>
+              <div class="timeline-title">下午分流景點活動（已購票）</div>
+              
+              <!-- Sub activity 1 -->
+              <div style="margin-top:10px; background:var(--bg-subtle); padding:10px; border-radius:var(--radius-md);">
+                <strong style="color:var(--primary-dark);">🎭 1. 傳藝中心 (9人)</strong>
+                <div class="tag-group">
+                  <span class="tag-pill">永耀</span><span class="tag-pill">採娥</span><span class="tag-pill">芷菱</span>
+                  <span class="tag-pill">瑋庭</span><span class="tag-pill">儼翰</span><span class="tag-pill">洎銘</span>
+                  <span class="tag-pill">蒂蒂</span><span class="tag-pill">爸媽</span>
+                </div>
+              </div>
+
+              <!-- Sub activity 2 -->
+              <div style="margin-top:10px; background:var(--bg-subtle); padding:10px; border-radius:var(--radius-md);">
+                <strong style="color:var(--sky);">💦 2. 童玩節玩水 (21人)</strong>
+                <div class="tag-group">
+                  <span class="tag-pill">維傑</span><span class="tag-pill">瑜欣</span><span class="tag-pill">和峻</span>
+                  <span class="tag-pill">和庭</span><span class="tag-pill">珮娣</span><span class="tag-pill">永堯</span>
+                  <span class="tag-pill">麗姿</span><span class="tag-pill">佳鑫</span><span class="tag-pill">崧愉</span>
+                  <span class="tag-pill">強強</span><span class="tag-pill">昭瑜</span><span class="tag-pill">小逸</span>
+                  <span class="tag-pill">浩浩</span><span class="tag-pill">希拉</span><span class="tag-pill">小玥</span>
+                  <span class="tag-pill">步步</span><span class="tag-pill">育豐</span><span class="tag-pill">珮蓉</span>
+                  <span class="tag-pill">丕丞</span><span class="tag-pill">于欣</span><span class="tag-pill">炘倫</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-time">17:30 ~ 17:40</div>
+              <div class="timeline-title">上車集合返回民宿</div>
+              <div class="timeline-desc">17:30 傳藝中心上車 ➔ 17:40 童玩節上車</div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot emerald"></div>
+              <div class="timeline-time">18:30</div>
+              <div class="timeline-title">晚餐：民宿煮火鍋</div>
+              <div class="timeline-desc">溫馨民宿火鍋趴（備用餐廳：湯蒸火鍋）</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- DAY 2 CONTENT -->
+      <div id="day-2" class="day-content">
+        <div class="card">
+          <div class="card-title">🎨 7/26 (日) 觀光體驗與觀光夜市</div>
+          
+          <div class="timeline">
+            
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-time">09:30</div>
+              <div class="timeline-title">民宿出發</div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot highlight"></div>
+              <div class="timeline-time">10:00 ~ 12:10</div>
+              <div class="timeline-title">蠟筆博物館</div>
+              <div class="timeline-desc">手作 DIY 與色彩體驗</div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-time">12:30</div>
+              <div class="timeline-title">午餐：水都餐廳</div>
+              <div class="timeline-desc">已訂 2 桌 + 1 桌現場點餐。飯後前往「南天宮拜拜」、「南方澳漁港逛逛」。</div>
+              <div class="tag-group">
+                <span class="badge badge-rose">妙怡姑姑 13:10 羅東火車站離團</span>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot emerald"></div>
+              <div class="timeline-time">14:30</div>
+              <div class="timeline-title">安永心食館</div>
+              <div class="timeline-desc">內部自由選擇：雷射槍射擊 (候補中)、漁樂體驗、DIY手作、咖啡廳</div>
+              <div style="font-size:0.8rem; color:var(--amber); margin-top:4px;">* 視天氣及時間，評估前往羅東林場</div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-time">17:00</div>
+              <div class="timeline-title">晚餐：樟樹園特色料理</div>
+              <div class="timeline-desc">已訂 3 桌美味桌菜。飯後前往「羅東夜市逛逛」。</div>
+              <div class="tag-group">
+                <span class="badge badge-amber">已訂3桌菜</span>
+                <span class="badge badge-green">羅東夜市</span>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-time">19:00</div>
+              <div class="timeline-title">返回民宿休息</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- DAY 3 CONTENT -->
+      <div id="day-3" class="day-content">
+        <div class="card">
+          <div class="card-title">🐟 7/27 (一) 趣味體驗與採買返程</div>
+          
+          <div class="timeline">
+            
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-time">08:30</div>
+              <div class="timeline-title">民宿出發</div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot highlight"></div>
+              <div class="timeline-time">08:50 ~ 11:00</div>
+              <div class="timeline-title">上午分流體驗活動</div>
+              
+              <!-- Sub activity 1 -->
+              <div style="margin-top:10px; background:var(--bg-subtle); padding:10px; border-radius:var(--radius-md);">
+                <strong style="color:var(--primary-dark);">🕵️ 1. 宜蘭金特務 007 (18人已訂)</strong>
+                <div class="tag-group">
+                  <span class="tag-pill">維傑</span><span class="tag-pill">瑜欣</span><span class="tag-pill">和峻</span>
+                  <span class="tag-pill">和庭</span><span class="tag-pill">儼翰</span><span class="tag-pill">洎銘</span>
+                  <span class="tag-pill">永堯</span><span class="tag-pill">麗姿</span><span class="tag-pill">佳鑫</span>
+                  <span class="tag-pill">崧愉</span><span class="tag-pill">強強</span><span class="tag-pill">昭瑜</span>
+                  <span class="tag-pill">小逸</span><span class="tag-pill">浩浩</span><span class="tag-pill">希拉</span>
+                  <span class="tag-pill">小玥</span><span class="tag-pill">丕丞</span><span class="tag-pill">于欣</span>
+                </div>
+              </div>
+
+              <!-- Sub activity 2 -->
+              <div style="margin-top:10px; background:var(--bg-subtle); padding:10px; border-radius:var(--radius-md);">
+                <strong style="color:var(--amber);">🦆 2. 鴨寮故事館 (12人 - 手作鹹鴨蛋)</strong>
+                <div class="tag-group">
+                  <span class="tag-pill">永耀</span><span class="tag-pill">採娥</span><span class="tag-pill">芷菱</span>
+                  <span class="tag-pill">瑋庭</span><span class="tag-pill">蒂蒂</span><span class="tag-pill">珮娣</span>
+                  <span class="tag-pill">步步</span><span class="tag-pill">育豐</span><span class="tag-pill">爸媽</span>
+                  <span class="tag-pill">珮蓉</span><span class="tag-pill">炘倫</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot emerald"></div>
+              <div class="timeline-time">11:00 ~ 12:30</div>
+              <div class="timeline-title">大塭休閒農場（水產體驗）</div>
+              <div class="timeline-desc" style="font-size:0.8rem; color:var(--text-secondary);">
+                預計：撈蝦 10 / 釣魚 6 / 遊船 6 (其中 8 位現場彈性調整)
+              </div>
+
+              <div style="margin-top:8px; background:var(--bg-subtle); padding:8px 10px; border-radius:var(--radius-sm); font-size:0.8rem;">
+                <strong>🦐 撈蝦體驗 (18人)：</strong> 維傑、瑜欣、和峻、和庭、永堯、麗姿、佳鑫、崧愉、強強、昭瑜、小逸、浩浩、希拉、小玥、珮蓉、丕丞、于欣、炘倫
+              </div>
+              <div style="margin-top:6px; background:var(--bg-subtle); padding:8px 10px; border-radius:var(--radius-sm); font-size:0.8rem;">
+                <strong>🎣 釣魚體驗 (6人)：</strong> 永耀、芷菱、儼翰、洎銘、蒂蒂、爸爸
+              </div>
+              <div style="margin-top:6px; background:var(--bg-subtle); padding:8px 10px; border-radius:var(--radius-sm); font-size:0.8rem;">
+                <strong>🚤 游魚塭解說+手作魚丸 (6人)：</strong> 採娥、瑋庭、珮娣、媽媽、步步、育豐
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-time">12:30</div>
+              <div class="timeline-title">午餐：大塭水產</div>
+              <div class="timeline-desc">已訂 2 桌 + 1 桌現點</div>
+              <div class="tag-group">
+                <span class="badge badge-amber">小妹用餐前與學校會合</span>
+                <span class="badge badge-rose">午餐後維傑*4於礁溪火車站離團</span>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-time">14:00</div>
+              <div class="timeline-title">礁溪採買伴手禮</div>
+              <div class="timeline-desc">礁溪奕順軒、鴨賞之家等特產名店</div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-time">15:00</div>
+              <div class="timeline-title">外帶阿宗芋冰城</div>
+              <div class="timeline-desc">車上享用古早味芋冰，啟程返回台北/桃園</div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot highlight"></div>
+              <div class="timeline-time">17:30 ~ 19:30</div>
+              <div class="timeline-title">抵達與返家抵達</div>
+              <div class="timeline-desc">
+                • 17:30 抵達松山機場（18:00 儼翰*2 至南京三民捷運站；19:15 立榮航班：爸媽、姑姑*4、叔叔*4、大姊*3）<br>
+                • 19:30 抵達桃園（19:00：大哥*6、丕丞、阿豐*2）
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- ==================== TAB 2: ROOMS (房間分配) ==================== -->
+    <section id="tab-rooms" class="tab-content">
+      <div class="card">
+        <div class="card-title">🛏️ 民宿房間分配總覽</div>
+        <div style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:12px;">
+          入住民宿：隆鑫民宿 / 宜蘭Touch星空民宿（共 6 間雙人房 + 4 間四人房）
+        </div>
+
+        <div class="room-section-title">
+          <span>👥 雙人房 (共 6 間)</span>
+        </div>
+
+        <div class="room-grid">
+          <div class="room-card">
+            <div class="room-num">雙人房 #1</div>
+            <div class="room-members">爸、媽</div>
+          </div>
+          <div class="room-card">
+            <div class="room-num">雙人房 #2</div>
+            <div class="room-members">希拉<br>阿玥</div>
+          </div>
+          <div class="room-card">
+            <div class="room-num">雙人房 #3</div>
+            <div class="room-members">儼翰<br>洎銘</div>
+          </div>
+          <div class="room-card">
+            <div class="room-num">雙人房 #4</div>
+            <div class="room-members">育豐<br>步步</div>
+          </div>
+          <div class="room-card">
+            <div class="room-num">雙人房 #5</div>
+            <div class="room-members">妙怡姑姑</div>
+          </div>
+          <div class="room-card">
+            <div class="room-num">雙人房 #6 (+2人)</div>
+            <div class="room-members">維傑、瑜欣<br>阿峻、阿庭</div>
+          </div>
+        </div>
+
+        <div class="room-section-title" style="margin-top:20px;">
+          <span>👨‍👩‍👧‍👦 四人房 (共 4 間)</span>
+        </div>
+
+        <div class="room-grid">
+          <div class="room-card">
+            <div class="room-num">四人房 #1 (+1人)</div>
+            <div class="room-members">姑姑、姑丈<br>芷菱、瑋庭<br>蒂蒂</div>
+          </div>
+          <div class="room-card">
+            <div class="room-num">四人房 #2</div>
+            <div class="room-members">叔叔、嬸嬸<br>佳馨、崧愉</div>
+          </div>
+          <div class="room-card">
+            <div class="room-num">四人房 #3</div>
+            <div class="room-members">強強、昭瑜<br>小逸、浩浩</div>
+          </div>
+          <div class="room-card">
+            <div class="room-num">四人房 #4</div>
+            <div class="room-members">珮蓉、珮娣<br>丕丞、于欣<br>炘倫</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ==================== TAB 3: TRANSPORT (乘車資訊) ==================== -->
+    <section id="tab-transport" class="tab-content">
+      
+      <!-- Bus Driver Info Card -->
+      <div class="card" style="background: linear-gradient(135deg, #1e293b, #0f172a); color:white;">
+        <div class="card-title" style="color:white;">
+          🚌 專屬遊覽車資訊
+        </div>
+        <div style="font-size:1.1rem; font-weight:800; color:#38bdf8; margin-bottom:4px;">
+          車號：KAB-9179
+        </div>
+        <div style="font-size:0.95rem; display:flex; justify-content:space-between; align-items:center;">
+          <span>司機：馮家駿 先生</span>
+          <a href="tel:0932527676" class="btn-action btn-phone">📞 0932-527-676</a>
+        </div>
+      </div>
+
+      <!-- Departure Pickup Points Card -->
+      <div class="card">
+        <div class="card-title">🛫 7/25 (六) 去程接載地點與名單</div>
+        
+        <div class="timeline">
+          
+          <div class="timeline-item">
+            <div class="timeline-dot highlight"></div>
+            <div class="timeline-time">08:10 第一站</div>
+            <div class="timeline-title">桃園高鐵站</div>
+            <div class="timeline-desc">乘客：妙怡姑姑</div>
+            <a href="tel:0928191866" class="btn-action btn-phone">📞 聯絡妙怡姑姑 (0928-191-866)</a>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-time">08:30 第二站</div>
+            <div class="timeline-title">桃園市文中路331號 (萊爾富旁)</div>
+            <div class="timeline-desc">乘客：維傑*4、阿豐*2</div>
+            <a href="tel:0912140842" class="btn-action btn-phone">📞 聯絡維傑 (0912-140-842)</a>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-time">08:45 第三站</div>
+            <div class="timeline-title">桃園區新埔六街154號 (同安親子公園旁)</div>
+            <div class="timeline-desc">乘客：爸媽、大姊*4、二姊、強強*6</div>
+            <a href="tel:0918192592" class="btn-action btn-phone">📞 聯絡石大哥 (0918-192-592)</a>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot emerald"></div>
+            <div class="timeline-time">10:00 第四站</div>
+            <div class="timeline-title">松山機場</div>
+            <div class="timeline-desc">乘客：姑姑*5、叔叔*4、儼翰*2 (搭乘 08:35 華信航班)</div>
+            <a href="tel:0965017733" class="btn-action btn-phone">📞 聯絡瑋庭 (0965-017-733)</a>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Return Trip Info Card -->
+      <div class="card">
+        <div class="card-title">🛬 7/26 ~ 7/27 回程與離團資訊</div>
+        
+        <div style="margin-bottom:12px;">
+          <strong style="color:var(--rose);">🗓️ 7/26 (日) 中途離團：</strong>
+          <div style="font-size:0.85rem; color:var(--text-secondary); margin-top:2px;">
+            • 13:10 妙怡姑姑由民宿/餐廳出發至羅東車站 (搭乘 13:56 火車)
+          </div>
+        </div>
+
+        <hr style="border:none; border-top:1px dashed var(--border); margin:12px 0;">
+
+        <div>
+          <strong style="color:var(--primary-dark);">🗓️ 7/27 (一) 告別與返程：</strong>
+          <div style="font-size:0.85rem; color:var(--text-secondary); margin-top:4px;">
+            • <strong>用餐前：</strong> 小妹與學校會合<br>
+            • <strong>午餐後：</strong> 礁溪火車站 ➔ 維傑*4 人離團<br>
+            • <strong>18:00：</strong> 南京三民捷運站 ➔ 儼翰*2 人<br>
+            • <strong>19:15：</strong> 松山機場立榮航班 ➔ 爸媽、姑姑*5、叔叔*4、大姊*2 (大姊*3於機場)<br>
+            • <strong>19:00：</strong> 桃園專車 ➔ 大哥*6、丕丞、阿豐*2
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- ==================== TAB 4: PLACES & CONTACTS (民宿與通訊) ==================== -->
+    <section id="tab-places" class="tab-content">
+      
+      <!-- Accommodations -->
+      <div class="card">
+        <div class="card-title">🏡 住宿民宿資訊</div>
+        
+        <div style="background:var(--bg-subtle); padding:12px; border-radius:var(--radius-md); margin-bottom:12px;">
+          <strong style="font-size:0.95rem; color:var(--primary-dark);">1. 隆鑫民宿</strong>
+          <div style="font-size:0.85rem; color:var(--text-secondary); margin-top:2px;">
+            地址：宜蘭縣五結鄉五結東路26-2號
+          </div>
+          <a href="https://www.google.com/maps/search/?api=1&query=宜蘭縣五結鄉五結東路26-2號" target="_blank" class="btn-action btn-map">📍 開啟 Google 地圖導航</a>
+        </div>
+
+        <div style="background:var(--bg-subtle); padding:12px; border-radius:var(--radius-md);">
+          <strong style="font-size:0.95rem; color:var(--sky);">2. 宜蘭Touch星空民宿</strong>
+          <div style="font-size:0.85rem; color:var(--text-secondary); margin-top:2px;">
+            地址：宜蘭縣五結鄉利澤村下福東路26-6號
+          </div>
+          <a href="https://www.google.com/maps/search/?api=1&query=宜蘭縣五結鄉利澤村下福東路26-6號" target="_blank" class="btn-action btn-map">📍 開啟 Google 地圖導航</a>
+        </div>
+      </div>
+
+      <!-- Quick Contact Directory -->
+      <div class="card">
+        <div class="card-title">📞 旅途重要聯絡清單</div>
+        
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
+            <div>
+              <strong>妙怡姑姑</strong>
+              <div style="font-size:0.75rem; color:var(--text-muted);">高鐵接載聯繫</div>
+            </div>
+            <a href="tel:0928191866" class="btn-action btn-phone">📞 0928-191-866</a>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
+            <div>
+              <strong>維傑</strong>
+              <div style="font-size:0.75rem; color:var(--text-muted);">文中路接載聯繫</div>
+            </div>
+            <a href="tel:0912140842" class="btn-action btn-phone">📞 0912-140-842</a>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
+            <div>
+              <strong>石大哥</strong>
+              <div style="font-size:0.75rem; color:var(--text-muted);">同安公園接載聯繫</div>
+            </div>
+            <a href="tel:0918192592" class="btn-action btn-phone">📞 0918-192-592</a>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
+            <div>
+              <strong>瑋庭</strong>
+              <div style="font-size:0.75rem; color:var(--text-muted);">松山機場接載聯繫</div>
+            </div>
+            <a href="tel:0965017733" class="btn-action btn-phone">📞 0965-017-733</a>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0;">
+            <div>
+              <strong>馮家駿 司機</strong>
+              <div style="font-size:0.75rem; color:var(--text-muted);">遊覽車 KAB-9179</div>
+            </div>
+            <a href="tel:0932527676" class="btn-action btn-phone">📞 0932-527-676</a>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation Bar (App Shell) -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-tab="itinerary">
+      <span class="nav-icon">📅</span>
+      <span>每日行程</span>
+    </button>
+    <button class="nav-item" data-tab="rooms">
+      <span class="nav-icon">🛏️</span>
+      <span>房間分配</span>
+    </button>
+    <button class="nav-item" data-tab="transport">
+      <span class="nav-icon">🚌</span>
+      <span>乘車資訊</span>
+    </button>
+    <button class="nav-item" data-tab="places">
+      <span class="nav-icon">🏠</span>
+      <span>民宿通訊</span>
+    </button>
+  </nav>
+
+  <script src="./app.js"></script>
+</body>
+</html>
