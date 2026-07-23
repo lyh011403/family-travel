@@ -44,9 +44,14 @@
     </div>
   </header>
 
-  <!-- Search Overlay -->
+  <!-- Search Backdrop & Fixed Floating Overlay for Mobile UX -->
+  <div id="search-backdrop" class="search-backdrop"></div>
+  
   <div id="search-results-overlay" class="search-results-overlay">
-    <div class="search-result-title">🔍 姓名搜尋結果</div>
+    <div class="search-modal-header">
+      <span id="search-result-count" class="search-result-title">🔍 搜尋結果</span>
+      <button id="search-close-btn" class="search-close-btn">✕ 關閉搜尋</button>
+    </div>
     <div id="search-results-container"></div>
   </div>
 

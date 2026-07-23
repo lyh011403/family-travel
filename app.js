@@ -115,22 +115,54 @@ const memberDatabase = [
   { name: '阿豐', phone: '-', room: '乘車名單', day1Pickup: '08:30 桃園文中路331號', day3Return: '7/27 19:00 桃園' }
 ];
 
-// Interactive Search Logic
+// Interactive Search Logic (Fixed Mobile Floating Modal & UX Optimization)
 const searchInput = document.getElementById('search-input');
 const searchClear = document.getElementById('search-clear');
+const searchBackdrop = document.getElementById('search-backdrop');
 const searchResultsOverlay = document.getElementById('search-results-overlay');
 const searchResultsContainer = document.getElementById('search-results-container');
+const searchResultCount = document.getElementById('search-result-count');
+const searchCloseBtn = document.getElementById('search-close-btn');
+const appHeader = document.querySelector('.app-header');
+
+function updateSearchOverlayPosition() {
+  if (appHeader && searchResultsOverlay) {
+    const rect = appHeader.getBoundingClientRect();
+    const topPos = Math.max(rect.bottom, 0) + 6;
+    searchResultsOverlay.style.top = `${topPos}px`;
+  }
+}
+
+function openSearchModal() {
+  window.scrollTo({ top: 0, behavior: 'instant' });
+  updateSearchOverlayPosition();
+  if (searchBackdrop) searchBackdrop.classList.add('active');
+  if (searchResultsOverlay) searchResultsOverlay.classList.add('active');
+}
+
+function closeSearchModal() {
+  if (searchBackdrop) searchBackdrop.classList.remove('active');
+  if (searchResultsOverlay) searchResultsOverlay.classList.remove('active');
+}
 
 if (searchInput) {
+  searchInput.addEventListener('focus', () => {
+    openSearchModal();
+    if (searchInput.value.trim().length > 0) {
+      performSearch(searchInput.value.trim().toLowerCase());
+    }
+  });
+
   searchInput.addEventListener('input', (e) => {
     const query = e.target.value.trim().toLowerCase();
     
     if (query.length > 0) {
       if (searchClear) searchClear.classList.add('active');
+      openSearchModal();
       performSearch(query);
     } else {
       if (searchClear) searchClear.classList.remove('active');
-      if (searchResultsOverlay) searchResultsOverlay.classList.remove('active');
+      closeSearchModal();
     }
   });
 }
@@ -139,40 +171,68 @@ if (searchClear) {
   searchClear.addEventListener('click', () => {
     if (searchInput) searchInput.value = '';
     searchClear.classList.remove('active');
-    if (searchResultsOverlay) searchResultsOverlay.classList.remove('active');
+    closeSearchModal();
   });
+}
+
+if (searchCloseBtn) {
+  searchCloseBtn.addEventListener('click', closeSearchModal);
+}
+
+if (searchBackdrop) {
+  searchBackdrop.addEventListener('click', closeSearchModal);
+}
+
+window.addEventListener('resize', updateSearchOverlayPosition);
+window.addEventListener('scroll', updateSearchOverlayPosition);
+
+function highlightMatch(text, query) {
+  if (!query) return text;
+  const regex = new RegExp(`(${query})`, 'gi');
+  return text.replace(regex, '<mark class="search-mark">$1</mark>');
 }
 
 function performSearch(query) {
   const matches = memberDatabase.filter((m) => m.name.toLowerCase().includes(query));
   
   if (matches.length > 0) {
+    if (searchResultCount) {
+      searchResultCount.textContent = `🔍 搜尋結果 (${matches.length}人)`;
+    }
     let html = '';
     matches.forEach((m) => {
+      const highlightedName = highlightMatch(m.name, query);
       html += `
         <div class="search-item">
           <div class="search-item-header">
-            <span>👤 ${m.name}</span>
-            ${m.phone !== '-' ? `<a href="tel:${m.phone}" style="color:var(--emerald); text-decoration:none;">📞 ${m.phone}</a>` : ''}
+            <span>👤 ${highlightedName}</span>
+            ${m.phone !== '-' ? `<a href="tel:${m.phone}" class="btn-action btn-phone" style="margin-top:0;">📞 ${m.phone}</a>` : ''}
           </div>
           <div class="search-item-detail">
-            🛏️ 房間：<strong>${m.room || '詳見房間表'}</strong>
+            🛏️ 房間：<strong>${m.room || '詳見房間分配'}</strong>
           </div>
           ${m.day1Activity ? `<div class="search-item-detail">📌 7/25 下午：${m.day1Activity}</div>` : ''}
           ${m.day3Activity ? `<div class="search-item-detail">🎯 7/27 體驗：${m.day3Activity}</div>` : ''}
           ${m.day1Pickup ? `<div class="search-item-detail">🚌 7/25 上車：${m.day1Pickup}</div>` : ''}
           ${m.day3Return ? `<div class="search-item-detail">🛫 回程資訊：${m.day3Return}</div>` : ''}
+          
+          <div style="margin-top:10px; display:flex; gap:8px;">
+            <button onclick="closeSearchModal(); document.querySelector('.nav-item[data-tab=rooms]').click();" class="btn-action btn-map" style="font-size:0.75rem; margin-top:0;">🛏️ 查看房間表</button>
+            <button onclick="closeSearchModal(); document.querySelector('.nav-item[data-tab=itinerary]').click();" class="btn-action btn-phone" style="font-size:0.75rem; margin-top:0; background:var(--sky-light); color:var(--sky); border-color:rgba(2,132,199,0.2);">📅 查看行程</button>
+          </div>
         </div>
       `;
     });
     searchResultsContainer.innerHTML = html;
-    searchResultsOverlay.classList.add('active');
   } else {
+    if (searchResultCount) {
+      searchResultCount.textContent = `🔍 搜尋結果 (0人)`;
+    }
     searchResultsContainer.innerHTML = `
-      <div style="font-size:0.85rem; color:var(--text-muted); text-align:center; padding:12px 0;">
-        查無「${query}」成員資訊，請嘗試輸入姓名關鍵字（如：維傑、妙怡、強強）
+      <div style="font-size:0.9rem; color:var(--text-secondary); text-align:center; padding:20px 0;">
+        查無包含「<strong style="color:var(--rose);">${query}</strong>」的成員資訊<br>
+        <span style="font-size:0.8rem; color:var(--text-muted); margin-top:6px; display:block;">請嘗試輸入姓名關鍵字（例如：維傑、妙怡、強強、儼翰）</span>
       </div>
     `;
-    searchResultsOverlay.classList.add('active');
   }
 }
