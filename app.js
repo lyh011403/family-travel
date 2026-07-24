@@ -255,8 +255,8 @@ function performSearch(query) {
           ${m.day3Return ? `<div class="search-item-detail">🛫 回程資訊：${m.day3Return}</div>` : ''}
           
           <div style="margin-top:10px; display:flex; gap:8px;">
-            <button onclick="closeSearchModal(); switchTab('tab-rooms');" class="btn-action btn-map" style="font-size:0.75rem; margin-top:0;">🛏️ 查看房間表</button>
-            <button onclick="closeSearchModal(); switchTab('tab-day1');" class="btn-action btn-phone" style="font-size:0.75rem; margin-top:0; background:var(--sky-light); color:var(--sky); border-color:rgba(2,132,199,0.2);">📅 查看 7/25 行程</button>
+            <button onclick="closeSearchModal(); switchMainTab('rooms');" class="btn-action btn-map" style="font-size:0.75rem; margin-top:0;">🛏️ 查看房間表</button>
+            <button onclick="closeSearchModal(); switchDayTab('day-1');" class="btn-action btn-phone" style="font-size:0.75rem; margin-top:0; background:var(--sky-light); color:var(--sky); border-color:rgba(2,132,199,0.2);">📅 查看 7/25 行程</button>
           </div>
         </div>
       `;
@@ -274,3 +274,199 @@ function performSearch(query) {
     `;
   }
 }
+
+// ==================== PACKING CHECKLIST LOGIC ====================
+const defaultChecklist = [
+  // ☀️ 防曬抗暑
+  { id: '1', name: '防曬乳 / 防曬噴霧', category: '☀️ 防曬抗暑', checked: false },
+  { id: '2', name: '遮陽傘 / 晴雨傘', category: '☀️ 防曬抗暑', checked: false },
+  { id: '3', name: '太陽眼鏡 / 墨鏡', category: '☀️ 防曬抗暑', checked: false },
+  { id: '4', name: '遮陽帽 / 大沿帽', category: '☀️ 防曬抗暑', checked: false },
+  { id: '5', name: '攜帶型小風扇 / 涼感巾', category: '☀️ 防曬抗暑', checked: false },
+
+  // 💦 童玩節玩水
+  { id: '6', name: '泳衣 / 泳褲', category: '💦 童玩節玩水', checked: false },
+  { id: '7', name: '泳帽 / 蛙鏡', category: '💦 童玩節玩水', checked: false },
+  { id: '8', name: '手機防水套 / 防水袋', category: '💦 童玩節玩水', checked: false },
+  { id: '9', name: '大浴巾 / 毛巾', category: '💦 童玩節玩水', checked: false },
+  { id: '10', name: '換洗乾淨衣物 (多備一套)', category: '💦 童玩節玩水', checked: false },
+  { id: '11', name: '防滑水鞋 / 海灘拖鞋', category: '💦 童玩節玩水', checked: false },
+
+  // 💊 藥品保健
+  { id: '12', name: '暈車藥 (遊覽車必備)', category: '💊 藥品保健', checked: false },
+  { id: '13', name: '個人常備藥 / 慢性病藥', category: '💊 藥品保健', checked: false },
+  { id: '14', name: '防蚊液 / 蚊蟲止癢膏', category: '💊 藥品保健', checked: false },
+  { id: '15', name: '感冒藥 / 止痛藥 / 胃藥', category: '💊 藥品保健', checked: false },
+  { id: '16', name: 'OK 繃 (創可貼) / 消毒棉片', category: '💊 藥品保健', checked: false },
+
+  // 🆔 證件金錢
+  { id: '17', name: '健保卡 / 身分證', category: '🆔 證件金錢', checked: false },
+  { id: '18', name: '現金 / 零錢 / 信用卡', category: '🆔 證件金錢', checked: false },
+
+  // 🎒 個人隨身
+  { id: '19', name: '行動電源 / 手機充電線', category: '🎒 個人隨身', checked: false },
+  { id: '20', name: '個人盥洗用品 / 牙刷牙膏', category: '🎒 個人隨身', checked: false },
+  { id: '21', name: '濕紙巾 / 隨身面紙', category: '🎒 個人隨身', checked: false },
+  { id: '22', name: '輕便雨衣 / 折疊傘', category: '🎒 個人隨身', checked: false },
+  { id: '23', name: '水壺 / 保溫瓶', category: '🎒 個人隨身', checked: false },
+  { id: '24', name: '大塑膠袋 / 夾鏈袋 (裝濕衣服)', category: '🎒 個人隨身', checked: false }
+];
+
+let packingItems = [];
+let currentPackingFilter = 'all';
+
+function getPackingList() {
+  const saved = localStorage.getItem('family_packing_list_v1');
+  if (saved) {
+    try {
+      return JSON.parse(saved);
+    } catch (e) {
+      return defaultChecklist;
+    }
+  }
+  return defaultChecklist;
+}
+
+function savePackingList(items) {
+  localStorage.setItem('family_packing_list_v1', JSON.stringify(items));
+}
+
+function resetPackingList() {
+  if (confirm('確定要將物品檢查表重置為預設清單嗎？（新增的自訂項目將被清空）')) {
+    packingItems = [...defaultChecklist];
+    savePackingList(packingItems);
+    renderPackingList();
+  }
+}
+
+function togglePackingItem(id) {
+  packingItems = packingItems.map(item => {
+    if (item.id === String(id)) {
+      return { ...item, checked: !item.checked };
+    }
+    return item;
+  });
+  savePackingList(packingItems);
+  renderPackingList();
+}
+
+function deletePackingItem(id) {
+  packingItems = packingItems.filter(item => item.id !== String(id));
+  savePackingList(packingItems);
+  renderPackingList();
+}
+
+function addPackingItem(name, category) {
+  if (!name.trim()) return;
+  const newItem = {
+    id: String(Date.now()),
+    name: name.trim(),
+    category: category || '🎒 個人隨身',
+    checked: false
+  };
+  packingItems.unshift(newItem);
+  savePackingList(packingItems);
+  renderPackingList();
+}
+
+function renderPackingList() {
+  const container = document.getElementById('packing-list-container');
+  const progressText = document.getElementById('packing-progress-text');
+  const progressBar = document.getElementById('packing-progress-bar');
+  if (!container) return;
+
+  const totalCount = packingItems.length;
+  const checkedCount = packingItems.filter(i => i.checked).length;
+  const percent = totalCount > 0 ? Math.round((checkedCount / totalCount) * 100) : 0;
+
+  if (progressText) progressText.textContent = `${checkedCount} / ${totalCount} (${percent}%)`;
+  if (progressBar) progressBar.style.width = `${percent}%`;
+
+  let filtered = packingItems;
+  if (currentPackingFilter === 'pending') {
+    filtered = packingItems.filter(i => !i.checked);
+  } else if (currentPackingFilter === 'done') {
+    filtered = packingItems.filter(i => i.checked);
+  }
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div style="text-align:center; color:var(--text-muted); padding:24px 0; font-size:0.88rem;">
+        目前沒有 ${currentPackingFilter === 'pending' ? '待準備' : currentPackingFilter === 'done' ? '已完成' : ''} 物品。
+      </div>
+    `;
+    return;
+  }
+
+  const categories = ['☀️ 防曬抗暑', '💦 童玩節玩水', '💊 藥品保健', '🆔 證件金錢', '🎒 個人隨身'];
+  let html = '';
+
+  categories.forEach(cat => {
+    const catItems = filtered.filter(i => i.category === cat);
+    if (catItems.length > 0) {
+      html += `<div class="checklist-cat-title"><span>${cat}</span><span>(${catItems.filter(i=>i.checked).length}/${catItems.length})</span></div>`;
+      catItems.forEach(item => {
+        html += `
+          <div class="checklist-item ${item.checked ? 'checked' : ''}">
+            <label class="checklist-label">
+              <input type="checkbox" class="checklist-checkbox" ${item.checked ? 'checked' : ''} onchange="togglePackingItem('${item.id}')">
+              <span class="checklist-text">${item.name}</span>
+            </label>
+            <button type="button" class="item-delete-btn" onclick="deletePackingItem('${item.id}')" title="刪除物品">🗑️</button>
+          </div>
+        `;
+      });
+    }
+  });
+
+  const otherItems = filtered.filter(i => !categories.includes(i.category));
+  if (otherItems.length > 0) {
+    html += `<div class="checklist-cat-title"><span>📌 其他自訂物資</span><span>(${otherItems.filter(i=>i.checked).length}/${otherItems.length})</span></div>`;
+    otherItems.forEach(item => {
+      html += `
+        <div class="checklist-item ${item.checked ? 'checked' : ''}">
+          <label class="checklist-label">
+            <input type="checkbox" class="checklist-checkbox" ${item.checked ? 'checked' : ''} onchange="togglePackingItem('${item.id}')">
+            <span class="checklist-text">${item.name} (${item.category})</span>
+          </label>
+          <button type="button" class="item-delete-btn" onclick="deletePackingItem('${item.id}')" title="刪除物品">🗑️</button>
+        </div>
+      `;
+    });
+  }
+
+  container.innerHTML = html;
+}
+
+// Initialize packing list
+document.addEventListener('DOMContentLoaded', () => {
+  packingItems = getPackingList();
+  renderPackingList();
+
+  const addBtn = document.getElementById('add-item-btn');
+  const inputEl = document.getElementById('new-item-input');
+  const catEl = document.getElementById('new-item-category');
+
+  if (addBtn && inputEl) {
+    addBtn.addEventListener('click', () => {
+      addPackingItem(inputEl.value, catEl ? catEl.value : '🎒 個人隨身');
+      inputEl.value = '';
+    });
+
+    inputEl.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        addPackingItem(inputEl.value, catEl ? catEl.value : '🎒 個人隨身');
+        inputEl.value = '';
+      }
+    });
+  }
+
+  document.querySelectorAll('.packing-filter-group .packing-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.packing-filter-group .packing-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentPackingFilter = btn.getAttribute('data-filter') || 'all';
+      renderPackingList();
+    });
+  });
+});

@@ -537,14 +537,58 @@
             <a href="tel:0932527676" class="btn-action btn-phone">📞 0932-527-676</a>
           </div>
 
+    <!-- ==================== TAB 5: PACKING CHECKLIST (必備物品檢查表) ==================== -->
+    <section id="tab-packing" class="tab-content">
+      <div class="card">
+        <div class="card-title" style="display:flex; justify-content:space-between; align-items:center;">
+          <span>🎒 旅遊必備物品檢查表</span>
+          <button type="button" onclick="resetPackingList()" style="font-size:0.75rem; color:var(--text-muted); background:none; border:none; cursor:pointer; padding:4px 8px;">🔄 恢復預設</button>
         </div>
-      </div>
+        
+        <div style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:14px;">
+          勾選已準備物品，可自由新增或刪除物品，進度會自動儲存於手機中。
+        </div>
 
+        <!-- Add Item Form -->
+        <div class="add-item-form">
+          <input type="text" id="new-item-input" placeholder="輸入想帶的物品（如：太陽眼鏡）..." autocomplete="off">
+          <select id="new-item-category">
+            <option value="☀️ 防曬抗暑">☀️ 防曬抗暑</option>
+            <option value="💦 童玩節玩水">💦 童玩節玩水</option>
+            <option value="💊 藥品保健">💊 藥品保健</option>
+            <option value="🆔 證件金錢">🆔 證件金錢</option>
+            <option value="🎒 個人隨身">🎒 個人隨身</option>
+          </select>
+          <button type="button" id="add-item-btn" class="btn-action btn-phone" style="margin-top:0; white-space:nowrap;">➕ 新增</button>
+        </div>
+
+        <!-- Progress Bar -->
+        <div style="margin: 16px 0 12px;">
+          <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:700; color:var(--text-secondary); margin-bottom:4px;">
+            <span>行李準備進度</span>
+            <span id="packing-progress-text">0 / 0 (0%)</span>
+          </div>
+          <div style="width:100%; height:8px; background:var(--bg-subtle); border-radius:4px; overflow:hidden;">
+            <div id="packing-progress-bar" style="width:0%; height:100%; background:linear-gradient(90deg, #10b981, #059669); transition:width 0.3s ease;"></div>
+          </div>
+        </div>
+
+        <!-- Filter Pills -->
+        <div class="packing-filter-group">
+          <button type="button" class="packing-filter-btn active" data-filter="all">全部物品</button>
+          <button type="button" class="packing-filter-btn" data-filter="pending">待準備</button>
+          <button type="button" class="packing-filter-btn" data-filter="done">已完成</button>
+        </div>
+
+        <!-- Dynamic Category & Item List Container -->
+        <div id="packing-list-container"></div>
+
+      </div>
     </section>
 
   </main>
 
-  <!-- Bottom Navigation Bar (App Shell - 保持原始四大頁面分頁) -->
+  <!-- Bottom Navigation Bar (App Shell - 包含 🎒 必備清單) -->
   <nav class="bottom-nav">
     <button type="button" class="nav-item active" data-tab="itinerary">
       <span class="nav-icon">📅</span>
@@ -562,8 +606,12 @@
       <span class="nav-icon">🏠</span>
       <span>民宿通訊</span>
     </button>
+    <button type="button" class="nav-item" data-tab="packing">
+      <span class="nav-icon">🎒</span>
+      <span>必備清單</span>
+    </button>
   </nav>
 
-  <script src="./app.js?v=5"></script>
+  <script src="./app.js?v=6"></script>
 </body>
 </html>
