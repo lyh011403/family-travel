@@ -40,12 +40,43 @@
   --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-/* Reset & Base Settings */
+/* Cross-Device Universal Reset (Samsung One UI, iOS Safari, Android Chrome, Xiaomi, OPPO, VIVO) */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  forced-color-adjust: none;
+}
+
+html, body {
+  color-scheme: light;
+  background-color: var(--bg-main);
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+  outline: none;
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+}
+
+a, a:visited, a:hover, a:active {
+  text-decoration: none !important;
+  color: inherit;
+  -webkit-touch-callout: none;
 }
 
 body {
@@ -514,38 +545,44 @@ body {
   border: 1px solid var(--border);
 }
 
-/* Action Buttons */
+/* Action Buttons (Hardened for Mobile Browsers) */
 .btn-action {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  border-radius: var(--radius-md);
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.2s ease;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  padding: 8px 14px !important;
+  border-radius: var(--radius-md) !important;
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  line-height: 1.2 !important;
   margin-top: 8px;
+  cursor: pointer !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
 }
 
 .btn-phone {
-  background: var(--emerald-light);
-  color: var(--emerald);
-  border: 1px solid rgba(5, 150, 105, 0.2);
+  background-color: var(--emerald-light) !important;
+  color: var(--emerald) !important;
+  border: 1px solid rgba(5, 150, 105, 0.25) !important;
 }
 
 .btn-phone:active {
-  background: #d1fae5;
+  background-color: #d1fae5 !important;
 }
 
 .btn-map {
-  background: var(--sky-light);
-  color: var(--sky);
-  border: 1px solid rgba(2, 132, 199, 0.2);
+  background-color: var(--sky-light) !important;
+  color: var(--sky) !important;
+  border: 1px solid rgba(2, 132, 199, 0.25) !important;
 }
 
 .btn-map:active {
-  background: #e0f2fe;
+  background-color: #e0f2fe !important;
 }
 
 /* Room Assignment Grids */
@@ -593,49 +630,59 @@ body {
   line-height: 1.4;
 }
 
-/* Bottom Navigation Bar (App Shell) */
+/* Bottom Navigation Bar (App Shell - Samsung & Cross-Mobile Hardened) */
 .bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: calc(60px + var(--safe-bottom));
-  background: rgba(255, 255, 255, 0.92);
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: calc(62px + var(--safe-bottom)) !important;
+  background: #ffffff !important;
+  background: rgba(255, 255, 255, 0.96) !important;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-top: 1px solid var(--border);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding-bottom: var(--safe-bottom);
-  z-index: 1000;
-  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.03);
+  border-top: 1px solid var(--border) !important;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-around !important;
+  align-items: center !important;
+  padding-bottom: var(--safe-bottom) !important;
+  z-index: 1000 !important;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05) !important;
 }
 
 .nav-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  color: var(--text-muted);
-  text-decoration: none;
-  font-size: 0.7rem;
-  font-weight: 600;
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: color 0.15s ease;
+  flex: 1 1 0% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 100% !important;
+  color: var(--text-muted) !important;
+  text-decoration: none !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  background: transparent !important;
+  border: 0 !important;
+  outline: none !important;
+  margin: 0 !important;
+  padding: 4px 0 !important;
+  cursor: pointer !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  box-shadow: none !important;
 }
 
 .nav-icon {
-  font-size: 1.25rem;
-  margin-bottom: 2px;
+  font-size: 1.25rem !important;
+  margin-bottom: 2px !important;
+  line-height: 1 !important;
+  display: block !important;
 }
 
 .nav-item.active {
-  color: var(--primary);
+  color: var(--primary) !important;
 }
 
 /* Responsive adjust for larger screens */

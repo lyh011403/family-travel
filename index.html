@@ -8,6 +8,8 @@
   <!-- PWA & Mobile Meta Tags -->
   <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#0f172a">
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="家族宜蘭行">
@@ -60,15 +62,15 @@
     
     <!-- Prominent Day Selector Bar (頂部天數切換列) -->
     <div class="day-selector-bar">
-      <button class="day-select-btn active" data-target="tab-day1">
+      <button type="button" class="day-select-btn active" data-target="tab-day1">
         <span class="day-title">Day 1</span>
         <span class="day-date">7/25 (六)</span>
       </button>
-      <button class="day-select-btn" data-target="tab-day2">
+      <button type="button" class="day-select-btn" data-target="tab-day2">
         <span class="day-title">Day 2</span>
         <span class="day-date">7/26 (日)</span>
       </button>
-      <button class="day-select-btn" data-target="tab-day3">
+      <button type="button" class="day-select-btn" data-target="tab-day3">
         <span class="day-title">Day 3</span>
         <span class="day-date">7/27 (一)</span>
       </button>
@@ -539,23 +541,23 @@
 
   <!-- Bottom Navigation Bar (App Shell) -->
   <nav class="bottom-nav">
-    <button class="nav-item active" data-tab="tab-day1">
+    <button type="button" class="nav-item active" data-tab="tab-day1">
       <span class="nav-icon">📅</span>
       <span>7/25 行程</span>
     </button>
-    <button class="nav-item" data-tab="tab-day2">
+    <button type="button" class="nav-item" data-tab="tab-day2">
       <span class="nav-icon">📅</span>
       <span>7/26 行程</span>
     </button>
-    <button class="nav-item" data-tab="tab-day3">
+    <button type="button" class="nav-item" data-tab="tab-day3">
       <span class="nav-icon">📅</span>
       <span>7/27 行程</span>
     </button>
-    <button class="nav-item" data-tab="tab-rooms">
+    <button type="button" class="nav-item" data-tab="tab-rooms">
       <span class="nav-icon">🛏️</span>
       <span>房間分配</span>
     </button>
-    <button class="nav-item" data-tab="tab-transport">
+    <button type="button" class="nav-item" data-tab="tab-transport">
       <span class="nav-icon">🚌</span>
       <span>交通民宿</span>
     </button>
