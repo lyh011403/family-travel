@@ -34,57 +34,80 @@ if (installBtn) {
   });
 }
 
-// Universal Tab & Day Page Switching Logic
-function switchTab(targetTabId) {
-  if (!targetTabId) return;
+// Main Bottom Nav Tab Switching Logic
+function switchMainTab(targetTab) {
+  if (!targetTab) return;
 
-  // 1. Hide all tab sections completely
+  // Hide all main tabs
   const allTabs = document.querySelectorAll('.tab-content');
   allTabs.forEach((tab) => tab.classList.remove('active'));
 
-  // 2. Show target tab section only
-  const targetTab = document.getElementById(targetTabId);
-  if (targetTab) {
-    targetTab.classList.add('active');
+  // Show target main tab
+  const targetElement = document.getElementById(`tab-${targetTab}`);
+  if (targetElement) {
+    targetElement.classList.add('active');
   }
 
-  // 3. Update top Day Selector buttons
-  const dayBtns = document.querySelectorAll('.day-select-btn');
-  dayBtns.forEach((btn) => {
-    if (btn.getAttribute('data-target') === targetTabId) {
-      btn.classList.add('active');
-    } else {
-      btn.classList.remove('active');
-    }
-  });
-
-  // 4. Update Bottom Nav items
+  // Update active state on bottom nav items
   const navItems = document.querySelectorAll('.bottom-nav .nav-item');
   navItems.forEach((item) => {
-    if (item.getAttribute('data-tab') === targetTabId) {
+    if (item.getAttribute('data-tab') === targetTab) {
       item.classList.add('active');
     } else {
       item.classList.remove('active');
     }
   });
 
-  // 5. Scroll immediately to top
   window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
-// Event Listeners for Day Selector Buttons
-document.querySelectorAll('.day-select-btn').forEach((btn) => {
-  btn.addEventListener('click', () => {
-    const target = btn.getAttribute('data-target');
-    switchTab(target);
+// Day Sub-tab Switching Logic (Inside Itinerary Tab)
+function switchDayTab(targetDayId) {
+  if (!targetDayId) return;
+
+  // Make sure we are on the itinerary tab first
+  switchMainTab('itinerary');
+
+  // Hide all day contents inside itinerary
+  const dayContents = document.querySelectorAll('.day-content');
+  dayContents.forEach((day) => day.classList.remove('active'));
+
+  // Show target day content
+  const targetDayElement = document.getElementById(targetDayId);
+  if (targetDayElement) {
+    targetDayElement.classList.add('active');
+  }
+
+  // Update active state on sub-tab buttons
+  const subTabBtns = document.querySelectorAll('.sub-tab-btn');
+  subTabBtns.forEach((btn) => {
+    if (btn.getAttribute('data-day') === targetDayId) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
   });
-});
+
+  // Smooth scroll up to top of main container
+  const container = document.querySelector('.main-container');
+  if (container && window.scrollY > 100) {
+    window.scrollTo({ top: container.offsetTop - 70, behavior: 'smooth' });
+  }
+}
 
 // Event Listeners for Bottom Navigation Bar Items
 document.querySelectorAll('.bottom-nav .nav-item').forEach((item) => {
   item.addEventListener('click', () => {
     const target = item.getAttribute('data-tab');
-    switchTab(target);
+    switchMainTab(target);
+  });
+});
+
+// Event Listeners for Day Sub-tab Buttons
+document.querySelectorAll('.sub-tab-btn').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const target = btn.getAttribute('data-day');
+    switchDayTab(target);
   });
 });
 
