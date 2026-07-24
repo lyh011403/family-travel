@@ -20,7 +20,7 @@
   <!-- SEO & Description -->
   <meta name="description" content="2026/07/25 ~ 07/27 老石人的幸福之旅 宜蘭三天兩夜家族旅遊數位指南與離線 PWA 手冊。">
 
-  <link rel="stylesheet" href="./styles.css?v=11">
+  <link rel="stylesheet" href="./styles.css?v=12">
 </head>
 
 <body>
@@ -68,13 +68,16 @@
       <div class="weather-header">
         <div class="weather-loc">
           <span class="weather-icon-main" id="weather-icon-main">🌤️</span>
-          <div>
-            <div class="weather-city">📍 宜蘭縣五結 / 礁溪 (即時氣象)</div>
+          <div class="weather-loc-text">
+            <div class="weather-city">📍 宜蘭五結 / 礁溪</div>
             <div class="weather-desc" id="weather-status-desc">載入即時天氣預報中...</div>
           </div>
         </div>
         <div class="weather-temp-group">
-          <span class="weather-temp" id="weather-temp">30°C</span>
+          <div class="weather-temp-row">
+            <span class="weather-temp" id="weather-temp">30°C</span>
+            <span class="weather-apparent" id="weather-apparent">體感 34°C</span>
+          </div>
           <span class="weather-rain-badge" id="weather-rain-badge">💧 降雨 20%</span>
         </div>
       </div>
@@ -658,7 +661,7 @@
     </button>
   </nav>
 
-  <script src="./app.js?v=11"></script>
+  <script src="./app.js?v=12"></script>
 </body>
 
 </html>

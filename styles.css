@@ -814,7 +814,7 @@ body {
   color: var(--rose);
 }
 
-/* Real-Time Weather Widget Styling */
+/* Real-Time Weather Widget Styling (Ultra-Hardened Mobile Responsive & High-Performance) */
 .weather-widget-card {
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
   color: #ffffff;
@@ -825,6 +825,8 @@ body {
   border: 1px solid rgba(56, 189, 248, 0.25);
   position: relative;
   overflow: hidden;
+  transform: translateZ(0); /* Hardware accelerated rendering */
+  contain: content;
 }
 
 .weather-widget-card::before {
@@ -843,47 +845,85 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
   margin-bottom: 12px;
 }
 
 .weather-loc {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 .weather-icon-main {
-  font-size: 2rem;
+  font-size: 1.8rem;
   line-height: 1;
+  flex-shrink: 0;
+  animation: gentleFloat 4s ease-in-out infinite;
+}
+
+@keyframes gentleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+.weather-loc-text {
+  min-width: 0;
+  overflow: hidden;
 }
 
 .weather-city {
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   font-weight: 800;
   color: #ffffff;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .weather-desc {
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   color: #94a3b8;
   margin-top: 1px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .weather-temp-group {
   text-align: right;
+  flex-shrink: 0;
+}
+
+.weather-temp-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 6px;
 }
 
 .weather-temp {
-  font-size: 1.4rem;
+  font-size: 1.35rem;
   font-weight: 900;
   color: #38bdf8;
-  display: block;
   line-height: 1.1;
+}
+
+.weather-apparent {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #cbd5e1;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  line-height: 1.2;
 }
 
 .weather-rain-badge {
   display: inline-block;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
   color: #60a5fa;
   background: rgba(37, 99, 235, 0.25);
@@ -900,6 +940,7 @@ body {
   padding-bottom: 4px;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  transform: translateZ(0);
 }
 
 .weather-hourly-strip::-webkit-scrollbar {
@@ -913,12 +954,18 @@ body {
   padding: 8px 10px;
   border-radius: var(--radius-md);
   text-align: center;
-  min-width: 66px;
+  min-width: 64px;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.weather-hour-pill:active {
+  transform: scale(0.96);
 }
 
 .weather-hour-pill.active {
   background: rgba(56, 189, 248, 0.2);
   border-color: rgba(56, 189, 248, 0.5);
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.2);
 }
 
 .weather-hour-time {
@@ -943,4 +990,26 @@ body {
   font-size: 0.68rem;
   color: #60a5fa;
   font-weight: 700;
+}
+
+/* Lightweight Micro-Animations & Touch Feedback (GPU Accelerated) */
+.sub-tab-btn, .day-select-btn, .nav-item, .btn-action, .pwa-btn {
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s ease !important;
+  will-change: transform;
+}
+
+.sub-tab-btn:active, .day-select-btn:active, .btn-action:active, .pwa-btn:active {
+  transform: scale(0.96) !important;
+}
+
+.nav-item:active {
+  transform: scale(0.92) !important;
+}
+
+/* Reduced Motion Safety Override for Elder/Budget Phones */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }

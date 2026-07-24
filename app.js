@@ -496,13 +496,14 @@ async function fetchYilanWeather() {
   const iconMain = document.getElementById('weather-icon-main');
   const descEl = document.getElementById('weather-status-desc');
   const tempEl = document.getElementById('weather-temp');
+  const apparentEl = document.getElementById('weather-apparent');
   const rainBadge = document.getElementById('weather-rain-badge');
   const hourlyStrip = document.getElementById('weather-hourly-strip');
 
   if (!iconMain || !descEl || !tempEl || !hourlyStrip) return;
 
   // Yilan Coordinates (Latitude 24.757, Longitude 121.753)
-  const apiUrl = 'https://api.open-meteo.com/v1/forecast?latitude=24.757&longitude=121.753&current=temperature_2m,relative_humidity_2m,weather_code&hourly=temperature_2m,precipitation_probability,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FTaipei';
+  const apiUrl = 'https://api.open-meteo.com/v1/forecast?latitude=24.757&longitude=121.753&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code&hourly=temperature_2m,apparent_temperature,precipitation_probability,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FTaipei';
 
   try {
     const res = await fetch(apiUrl);
@@ -523,7 +524,8 @@ async function fetchYilanWeather() {
       if (idx !== -1) startIndex = idx;
     }
 
-    const curTemp = current.temperature_2m ? Math.round(current.temperature_2m) : 30;
+    const curTemp = current.temperature_2m !== undefined ? Math.round(current.temperature_2m) : 30;
+    const curApparent = current.apparent_temperature !== undefined ? Math.round(current.apparent_temperature) : curTemp + 3;
     const curCode = current.weather_code !== undefined ? current.weather_code : 1;
     const currentRainProb = hourly.precipitation_probability && hourly.precipitation_probability.length > startIndex ? hourly.precipitation_probability[startIndex] : 20;
 
@@ -532,6 +534,7 @@ async function fetchYilanWeather() {
     iconMain.textContent = info.icon;
     descEl.textContent = `${info.text} • 宜蘭五結/礁溪 (24H即時)`;
     tempEl.textContent = `${curTemp}°C`;
+    if (apparentEl) apparentEl.textContent = `體感 ${curApparent}°C`;
     rainBadge.textContent = `💧 降雨 ${currentRainProb}%`;
 
     // Build 24-hour pills from current hour
