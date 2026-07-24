@@ -85,15 +85,18 @@ body {
   color: var(--text-primary);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   padding-bottom: calc(75px + var(--safe-bottom));
   overflow-x: hidden;
+  min-height: 100vh;
+  min-height: 100dvh;
 }
 
-/* App Header */
+/* App Header (iOS Dynamic Island & Notch Safe Area Supported) */
 .app-header {
   background: var(--bg-dark);
   color: var(--text-inverse);
-  padding: 16px 20px 12px;
+  padding: max(16px, env(safe-area-inset-top, 16px)) 20px 12px;
   position: sticky;
   top: 0;
   z-index: 100;
