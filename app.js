@@ -34,48 +34,57 @@ if (installBtn) {
   });
 }
 
-// Bottom Navigation Tab Switching
-const navItems = document.querySelectorAll('.bottom-nav .nav-item');
-const tabContents = document.querySelectorAll('.tab-content');
+// Universal Tab & Day Page Switching Logic
+function switchTab(targetTabId) {
+  if (!targetTabId) return;
 
-navItems.forEach((item) => {
-  item.addEventListener('click', () => {
-    const targetTab = item.getAttribute('data-tab');
-    
-    navItems.forEach((n) => n.classList.remove('active'));
-    tabContents.forEach((c) => c.classList.remove('active'));
-    
-    item.classList.add('active');
-    const activeContent = document.getElementById(`tab-${targetTab}`);
-    if (activeContent) {
-      activeContent.classList.add('active');
+  // 1. Hide all tab sections completely
+  const allTabs = document.querySelectorAll('.tab-content');
+  allTabs.forEach((tab) => tab.classList.remove('active'));
+
+  // 2. Show target tab section only
+  const targetTab = document.getElementById(targetTabId);
+  if (targetTab) {
+    targetTab.classList.add('active');
+  }
+
+  // 3. Update top Day Selector buttons
+  const dayBtns = document.querySelectorAll('.day-select-btn');
+  dayBtns.forEach((btn) => {
+    if (btn.getAttribute('data-target') === targetTabId) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // 4. Update Bottom Nav items
+  const navItems = document.querySelectorAll('.bottom-nav .nav-item');
+  navItems.forEach((item) => {
+    if (item.getAttribute('data-tab') === targetTabId) {
+      item.classList.add('active');
+    } else {
+      item.classList.remove('active');
+    }
+  });
+
+  // 5. Scroll immediately to top
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+// Event Listeners for Day Selector Buttons
+document.querySelectorAll('.day-select-btn').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const target = btn.getAttribute('data-target');
+    switchTab(target);
   });
 });
 
-// Day Sub-tabs Switching inside Itinerary Tab
-const subTabBtns = document.querySelectorAll('.sub-tab-btn');
-const dayContents = document.querySelectorAll('.day-content');
-
-subTabBtns.forEach((btn) => {
-  btn.addEventListener('click', () => {
-    const targetDay = btn.getAttribute('data-day');
-    
-    subTabBtns.forEach((b) => b.classList.remove('active'));
-    dayContents.forEach((d) => d.classList.remove('active'));
-    
-    btn.classList.add('active');
-    const activeDay = document.getElementById(`day-${targetDay}`);
-    if (activeDay) {
-      activeDay.classList.add('active');
-    }
-
-    // 平滑捲動至行程頂部以提升手機視覺反饋
-    const container = document.querySelector('.main-container');
-    if (container && window.scrollY > 120) {
-      window.scrollTo({ top: container.offsetTop - 70, behavior: 'smooth' });
-    }
+// Event Listeners for Bottom Navigation Bar Items
+document.querySelectorAll('.bottom-nav .nav-item').forEach((item) => {
+  item.addEventListener('click', () => {
+    const target = item.getAttribute('data-tab');
+    switchTab(target);
   });
 });
 
@@ -223,8 +232,8 @@ function performSearch(query) {
           ${m.day3Return ? `<div class="search-item-detail">🛫 回程資訊：${m.day3Return}</div>` : ''}
           
           <div style="margin-top:10px; display:flex; gap:8px;">
-            <button onclick="closeSearchModal(); document.querySelector('.nav-item[data-tab=rooms]').click();" class="btn-action btn-map" style="font-size:0.75rem; margin-top:0;">🛏️ 查看房間表</button>
-            <button onclick="closeSearchModal(); document.querySelector('.nav-item[data-tab=itinerary]').click();" class="btn-action btn-phone" style="font-size:0.75rem; margin-top:0; background:var(--sky-light); color:var(--sky); border-color:rgba(2,132,199,0.2);">📅 查看行程</button>
+            <button onclick="closeSearchModal(); switchTab('tab-rooms');" class="btn-action btn-map" style="font-size:0.75rem; margin-top:0;">🛏️ 查看房間表</button>
+            <button onclick="closeSearchModal(); switchTab('tab-day1');" class="btn-action btn-phone" style="font-size:0.75rem; margin-top:0; background:var(--sky-light); color:var(--sky); border-color:rgba(2,132,199,0.2);">📅 查看 7/25 行程</button>
           </div>
         </div>
       `;
