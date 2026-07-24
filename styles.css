@@ -1013,3 +1013,34 @@ body {
     transition: none !important;
   }
 }
+
+/* Horizontal Page Flip Micro-Animations (GPU Accelerated) */
+.tab-content.slide-left, .day-content.slide-left {
+  animation: slideInRight 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tab-content.slide-right, .day-content.slide-right {
+  animation: slideInLeft 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translate3d(24px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(-24px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}

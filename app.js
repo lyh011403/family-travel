@@ -34,21 +34,28 @@ if (installBtn) {
   });
 }
 
-// Main Bottom Nav Tab Switching Logic
-function switchMainTab(targetTab) {
+// Main Bottom Nav Tab Switching Logic with Directional Slide Animations
+const mainTabOrder = ['itinerary', 'rooms', 'transport', 'places', 'packing'];
+const dayTabOrder = ['day-1', 'day-2', 'day-3'];
+
+function switchMainTab(targetTab, direction = null) {
   if (!targetTab) return;
 
-  // Hide all main tabs
   const allTabs = document.querySelectorAll('.tab-content');
-  allTabs.forEach((tab) => tab.classList.remove('active'));
+  allTabs.forEach((tab) => {
+    tab.classList.remove('active', 'slide-left', 'slide-right');
+  });
 
-  // Show target main tab
   const targetElement = document.getElementById(`tab-${targetTab}`);
   if (targetElement) {
     targetElement.classList.add('active');
+    if (direction === 'left') {
+      targetElement.classList.add('slide-left');
+    } else if (direction === 'right') {
+      targetElement.classList.add('slide-right');
+    }
   }
 
-  // Update active state on bottom nav items
   const navItems = document.querySelectorAll('.bottom-nav .nav-item');
   navItems.forEach((item) => {
     if (item.getAttribute('data-tab') === targetTab) {
@@ -61,24 +68,27 @@ function switchMainTab(targetTab) {
   window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
-// Day Sub-tab Switching Logic (Inside Itinerary Tab)
-function switchDayTab(targetDayId) {
+// Day Sub-tab Switching Logic with Directional Slide Animations
+function switchDayTab(targetDayId, direction = null) {
   if (!targetDayId) return;
 
-  // Make sure we are on the itinerary tab first
   switchMainTab('itinerary');
 
-  // Hide all day contents inside itinerary
   const dayContents = document.querySelectorAll('.day-content');
-  dayContents.forEach((day) => day.classList.remove('active'));
+  dayContents.forEach((day) => {
+    day.classList.remove('active', 'slide-left', 'slide-right');
+  });
 
-  // Show target day content
   const targetDayElement = document.getElementById(targetDayId);
   if (targetDayElement) {
     targetDayElement.classList.add('active');
+    if (direction === 'left') {
+      targetDayElement.classList.add('slide-left');
+    } else if (direction === 'right') {
+      targetDayElement.classList.add('slide-right');
+    }
   }
 
-  // Update active state on sub-tab buttons
   const subTabBtns = document.querySelectorAll('.sub-tab-btn');
   subTabBtns.forEach((btn) => {
     if (btn.getAttribute('data-day') === targetDayId) {
@@ -88,10 +98,79 @@ function switchDayTab(targetDayId) {
     }
   });
 
-  // Smooth scroll up to top of main container
   const container = document.querySelector('.main-container');
   if (container && window.scrollY > 100) {
     window.scrollTo({ top: container.offsetTop - 70, behavior: 'smooth' });
+  }
+}
+
+// Touch Swipe Gesture Listener for Mobile Page Flipping
+function initTouchSwipe() {
+  const container = document.querySelector('.main-container');
+  if (!container) return;
+
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchEndX = 0;
+  let touchEndY = 0;
+
+  container.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 1) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  container.addEventListener('touchend', (e) => {
+    if (e.changedTouches.length === 1) {
+      touchEndX = e.changedTouches[0].clientX;
+      touchEndY = e.changedTouches[0].clientY;
+      handleSwipeGesture();
+    }
+  }, { passive: true });
+
+  function handleSwipeGesture() {
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+
+    // Minimum swipe threshold (50px) & horizontal angle check (must be more horizontal than vertical)
+    if (Math.abs(deltaX) > 50 && Math.abs(deltaX) > Math.abs(deltaY) * 1.4) {
+      const activeMainTabEl = document.querySelector('.tab-content.active');
+      const activeMainTabId = activeMainTabEl ? activeMainTabEl.id.replace('tab-', '') : 'itinerary';
+
+      if (activeMainTabId === 'itinerary') {
+        const activeDayEl = document.querySelector('.day-content.active');
+        const activeDayId = activeDayEl ? activeDayEl.id : 'day-1';
+        const dayIdx = dayTabOrder.indexOf(activeDayId);
+
+        if (deltaX < -50) {
+          // Swiped LEFT -> Next Day or Next Tab
+          if (dayIdx < dayTabOrder.length - 1) {
+            switchDayTab(dayTabOrder[dayIdx + 1], 'left');
+          } else {
+            switchMainTab('rooms', 'left');
+          }
+        } else if (deltaX > 50) {
+          // Swiped RIGHT -> Previous Day
+          if (dayIdx > 0) {
+            switchDayTab(dayTabOrder[dayIdx - 1], 'right');
+          }
+        }
+      } else {
+        const mainIdx = mainTabOrder.indexOf(activeMainTabId);
+        if (deltaX < -50 && mainIdx < mainTabOrder.length - 1) {
+          // Swiped LEFT -> Next Main Tab
+          switchMainTab(mainTabOrder[mainIdx + 1], 'left');
+        } else if (deltaX > 50 && mainIdx > 0) {
+          // Swiped RIGHT -> Previous Main Tab
+          if (mainTabOrder[mainIdx - 1] === 'itinerary') {
+            switchDayTab('day-3', 'right');
+          } else {
+            switchMainTab(mainTabOrder[mainIdx - 1], 'right');
+          }
+        }
+      }
+    }
   }
 }
 
@@ -476,8 +555,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Init Real-time Yilan Weather
+  // Init Real-time Yilan Weather & Touch Swipe Gestures
   fetchYilanWeather();
+  initTouchSwipe();
 });
 
 // ==================== YILAN LIVE WEATHER API & FORECAST ====================
