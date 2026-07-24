@@ -51,9 +51,9 @@
   forced-color-adjust: none;
 }
 
-html, body {
+html {
   color-scheme: light;
-  background-color: var(--bg-main);
+  background-color: #0f172a !important; /* Locks Safari top status bar & overscroll color to dark navy */
 }
 
 button, input, select, textarea {
@@ -80,7 +80,6 @@ a, a:visited, a:hover, a:active {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
   background-color: var(--bg-main);
   color: var(--text-primary);
   line-height: 1.5;
