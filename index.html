@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
   <title>老石人的幸福之旅 | 宜蘭三天兩夜</title>
-  
+
   <!-- PWA & Mobile Meta Tags (iOS Safari & Android Hardened) -->
   <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#0f172a">
@@ -14,12 +16,13 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="老石人的幸福之旅">
   <link rel="apple-touch-icon" sizes="180x180" href="./icon-192.png">
-  
+
   <!-- SEO & Description -->
   <meta name="description" content="2026/07/25 ~ 07/27 老石人的幸福之旅 宜蘭三天兩夜家族旅遊數位指南與離線 PWA 手冊。">
-  
-  <link rel="stylesheet" href="./styles.css?v=7">
+
+  <link rel="stylesheet" href="./styles.css?v=8">
 </head>
+
 <body>
 
   <!-- PWA Install Prompt Banner -->
@@ -37,7 +40,7 @@
       </div>
       <div class="header-sub">07/25 ~ 07/27</div>
     </div>
-    
+
     <!-- Instant Search Bar -->
     <div class="search-container">
       <span class="search-icon">🔍</span>
@@ -48,7 +51,7 @@
 
   <!-- Search Backdrop & Fixed Floating Overlay for Mobile UX -->
   <div id="search-backdrop" class="search-backdrop"></div>
-  
+
   <div id="search-results-overlay" class="search-results-overlay">
     <div class="search-modal-header">
       <span id="search-result-count" class="search-result-title">🔍 搜尋結果</span>
@@ -59,10 +62,10 @@
 
   <!-- Main View Area -->
   <main class="main-container">
-    
+
     <!-- ==================== TAB 1: ITINERARY (每日行程頁面) ==================== -->
     <section id="tab-itinerary" class="tab-content active">
-      
+
       <!-- Day Sub-tabs Selector Bar (天數切換頁籤) -->
       <div class="day-selector-bar">
         <button type="button" class="sub-tab-btn active" data-day="day-1">
@@ -83,16 +86,18 @@
       <div id="day-1" class="day-content active">
         <div class="card">
           <div class="card-title">🚩 7/25 (六) 集合出發與景點行程</div>
-          
+
           <div class="timeline">
-            
+
             <div class="timeline-item">
               <div class="timeline-dot highlight"></div>
               <div class="timeline-time">08:10 ~ 10:00</div>
               <div class="timeline-title">接載集合出發</div>
               <div class="timeline-desc">
                 分定點接送（桃園高鐵、桃園文中路、新埔六街同安公園、松山機場）
-                <button type="button" onclick="switchMainTab('transport')" style="background:none; border:none; color:var(--primary); font-weight:700; cursor:pointer; padding:0;">查看詳細乘車表 →</button>
+                <button type="button" onclick="switchMainTab('transport')"
+                  style="background:none; border:none; color:var(--primary); font-weight:700; cursor:pointer; padding:0;">查看詳細乘車表
+                  →</button>
               </div>
             </div>
 
@@ -111,7 +116,7 @@
               <div class="timeline-dot highlight"></div>
               <div class="timeline-time">13:00 ~ 17:30</div>
               <div class="timeline-title">下午分流景點活動（已購票）</div>
-              
+
               <!-- Sub activity 1 -->
               <div style="margin-top:10px; background:var(--bg-subtle); padding:10px; border-radius:var(--radius-md);">
                 <strong style="color:var(--primary-dark);">🎭 1. 傳藝中心 (9人)</strong>
@@ -159,9 +164,9 @@
       <div id="day-2" class="day-content">
         <div class="card">
           <div class="card-title">🎨 7/26 (日) 觀光體驗與觀光夜市</div>
-          
+
           <div class="timeline">
-            
+
             <div class="timeline-item">
               <div class="timeline-dot"></div>
               <div class="timeline-time">09:30</div>
@@ -218,9 +223,9 @@
       <div id="day-3" class="day-content">
         <div class="card">
           <div class="card-title">🐟 7/27 (一) 趣味體驗與採買返程</div>
-          
+
           <div class="timeline">
-            
+
             <div class="timeline-item">
               <div class="timeline-dot"></div>
               <div class="timeline-time">08:30</div>
@@ -231,7 +236,7 @@
               <div class="timeline-dot highlight"></div>
               <div class="timeline-time">08:50 ~ 11:00</div>
               <div class="timeline-title">上午分流體驗活動</div>
-              
+
               <!-- Sub activity 1 -->
               <div style="margin-top:10px; background:var(--bg-subtle); padding:10px; border-radius:var(--radius-md);">
                 <strong style="color:var(--primary-dark);">🕵️ 1. 宜蘭金特務 007 (18人已訂)</strong>
@@ -265,13 +270,16 @@
                 預計：撈蝦 10 / 釣魚 6 / 遊船 6 (其中 8 位現場彈性調整)
               </div>
 
-              <div style="margin-top:8px; background:var(--bg-subtle); padding:8px 10px; border-radius:var(--radius-sm); font-size:0.8rem;">
+              <div
+                style="margin-top:8px; background:var(--bg-subtle); padding:8px 10px; border-radius:var(--radius-sm); font-size:0.8rem;">
                 <strong>🦐 撈蝦體驗 (18人)：</strong> 維傑、瑜欣、和峻、和庭、永堯、麗姿、佳鑫、崧愉、強強、昭瑜、小逸、浩浩、希拉、小玥、珮蓉、丕丞、于欣、炘倫
               </div>
-              <div style="margin-top:6px; background:var(--bg-subtle); padding:8px 10px; border-radius:var(--radius-sm); font-size:0.8rem;">
+              <div
+                style="margin-top:6px; background:var(--bg-subtle); padding:8px 10px; border-radius:var(--radius-sm); font-size:0.8rem;">
                 <strong>🎣 釣魚體驗 (6人)：</strong> 永耀、芷菱、儼翰、洎銘、蒂蒂、爸爸
               </div>
-              <div style="margin-top:6px; background:var(--bg-subtle); padding:8px 10px; border-radius:var(--radius-sm); font-size:0.8rem;">
+              <div
+                style="margin-top:6px; background:var(--bg-subtle); padding:8px 10px; border-radius:var(--radius-sm); font-size:0.8rem;">
                 <strong>🚤 游魚塭解說+手作魚丸 (6人)：</strong> 採娥、瑋庭、珮娣、媽媽、步步、育豐
               </div>
             </div>
@@ -384,7 +392,7 @@
 
     <!-- ==================== TAB 3: TRANSPORT (乘車資訊頁面) ==================== -->
     <section id="tab-transport" class="tab-content">
-      
+
       <!-- Bus Driver Info Card -->
       <div class="card" style="background: linear-gradient(135deg, #1e293b, #0f172a); color:white;">
         <div class="card-title" style="color:white;">
@@ -402,9 +410,9 @@
       <!-- Departure Pickup Points Card -->
       <div class="card">
         <div class="card-title">🛫 7/25 (六) 去程接載地點與名單</div>
-        
+
         <div class="timeline">
-          
+
           <div class="timeline-item">
             <div class="timeline-dot highlight"></div>
             <div class="timeline-time">08:10 第一站</div>
@@ -442,10 +450,10 @@
 
       <!-- Return Trip Info Card -->
       <div class="card">
-        <div class="card-title">🛬 7/26 ~ 7/27 回程與離團資訊</div>
-        
+        <div class="card-title">🛬 7/26 ~ 7/27 返程資訊</div>
+
         <div style="margin-bottom:12px;">
-          <strong style="color:var(--rose);">🗓️ 7/26 (日) 中途離團：</strong>
+          <strong style="color:var(--rose);">🗓️ 7/26 (日) 反程：</strong>
           <div style="font-size:0.85rem; color:var(--text-secondary); margin-top:2px;">
             • 13:10 妙怡姑姑由民宿/餐廳出發至羅東車站 (搭乘 13:56 火車)
           </div>
@@ -454,12 +462,12 @@
         <hr style="border:none; border-top:1px dashed var(--border); margin:12px 0;">
 
         <div>
-          <strong style="color:var(--primary-dark);">🗓️ 7/27 (一) 告別與返程：</strong>
+          <strong style="color:var(--primary-dark);">🗓️ 7/27 (一) 返程：</strong>
           <div style="font-size:0.85rem; color:var(--text-secondary); margin-top:4px;">
             • <strong>用餐前：</strong> 小妹與學校會合<br>
             • <strong>午餐後：</strong> 礁溪火車站 ➔ 維傑*4 人離團<br>
             • <strong>18:00：</strong> 南京三民捷運站 ➔ 儼翰*2 人<br>
-            • <strong>19:15：</strong> 松山機場立榮航班 ➔ 爸媽、姑姑*5、叔叔*4、大姊*2 (大姊*3於機場)<br>
+            • <strong>18:15：</strong> 松山機場立榮航班（19:15 飛機） ➔ 爸媽、姑姑*5、叔叔*4、大姊*2 <br>
             • <strong>19:00：</strong> 桃園專車 ➔ 大哥*6、丕丞、阿豐*2
           </div>
         </div>
@@ -469,17 +477,18 @@
 
     <!-- ==================== TAB 4: PLACES (民宿通訊頁面) ==================== -->
     <section id="tab-places" class="tab-content">
-      
+
       <!-- Accommodations -->
       <div class="card">
         <div class="card-title">🏡 住宿民宿資訊</div>
-        
+
         <div style="background:var(--bg-subtle); padding:12px; border-radius:var(--radius-md); margin-bottom:12px;">
           <strong style="font-size:0.95rem; color:var(--primary-dark);">1. 隆鑫民宿</strong>
           <div style="font-size:0.85rem; color:var(--text-secondary); margin-top:2px;">
             地址：宜蘭縣五結鄉五結東路26-2號
           </div>
-          <a href="https://www.google.com/maps/search/?api=1&query=宜蘭縣五結鄉五結東路26-2號" target="_blank" class="btn-action btn-map">📍 開啟 Google 地圖導航</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=宜蘭縣五結鄉五結東路26-2號" target="_blank"
+            class="btn-action btn-map">📍 開啟 Google 地圖導航</a>
         </div>
 
         <div style="background:var(--bg-subtle); padding:12px; border-radius:var(--radius-md);">
@@ -487,17 +496,19 @@
           <div style="font-size:0.85rem; color:var(--text-secondary); margin-top:2px;">
             地址：宜蘭縣五結鄉利澤村下福東路26-6號
           </div>
-          <a href="https://www.google.com/maps/search/?api=1&query=宜蘭縣五結鄉利澤村下福東路26-6號" target="_blank" class="btn-action btn-map">📍 開啟 Google 地圖導航</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=宜蘭縣五結鄉利澤村下福東路26-6號" target="_blank"
+            class="btn-action btn-map">📍 開啟 Google 地圖導航</a>
         </div>
       </div>
 
       <!-- Quick Contact Directory -->
       <div class="card">
         <div class="card-title">📞 旅途重要聯絡清單</div>
-        
+
         <div style="display:flex; flex-direction:column; gap:10px;">
-          
-          <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
+
+          <div
+            style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
             <div>
               <strong>妙怡姑姑</strong>
               <div style="font-size:0.75rem; color:var(--text-muted);">高鐵接載聯繫</div>
@@ -505,7 +516,8 @@
             <a href="tel:0928191866" class="btn-action btn-phone">📞 0928-191-866</a>
           </div>
 
-          <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
+          <div
+            style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
             <div>
               <strong>維傑</strong>
               <div style="font-size:0.75rem; color:var(--text-muted);">文中路接載聯繫</div>
@@ -513,7 +525,8 @@
             <a href="tel:0912140842" class="btn-action btn-phone">📞 0912-140-842</a>
           </div>
 
-          <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
+          <div
+            style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
             <div>
               <strong>石大哥</strong>
               <div style="font-size:0.75rem; color:var(--text-muted);">同安公園接載聯繫</div>
@@ -521,7 +534,8 @@
             <a href="tel:0918192592" class="btn-action btn-phone">📞 0918-192-592</a>
           </div>
 
-          <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
+          <div
+            style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
             <div>
               <strong>瑋庭</strong>
               <div style="font-size:0.75rem; color:var(--text-muted);">松山機場接載聯繫</div>
@@ -546,9 +560,11 @@
       <div class="card">
         <div class="card-title" style="display:flex; justify-content:space-between; align-items:center;">
           <span>🎒 旅遊必備物品檢查表</span>
-          <button type="button" onclick="resetPackingList()" style="font-size:0.75rem; color:var(--text-muted); background:none; border:none; cursor:pointer; padding:4px 8px;">🔄 恢復預設</button>
+          <button type="button" onclick="resetPackingList()"
+            style="font-size:0.75rem; color:var(--text-muted); background:none; border:none; cursor:pointer; padding:4px 8px;">🔄
+            恢復預設</button>
         </div>
-        
+
         <div style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:14px;">
           勾選已準備物品，可自由新增或刪除物品，進度會自動儲存於手機中。
         </div>
@@ -563,17 +579,21 @@
             <option value="🆔 證件金錢">🆔 證件金錢</option>
             <option value="🎒 個人隨身">🎒 個人隨身</option>
           </select>
-          <button type="button" id="add-item-btn" class="btn-action btn-phone" style="margin-top:0; white-space:nowrap;">➕ 新增</button>
+          <button type="button" id="add-item-btn" class="btn-action btn-phone"
+            style="margin-top:0; white-space:nowrap;">➕ 新增</button>
         </div>
 
         <!-- Progress Bar -->
         <div style="margin: 16px 0 12px;">
-          <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:700; color:var(--text-secondary); margin-bottom:4px;">
+          <div
+            style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:700; color:var(--text-secondary); margin-bottom:4px;">
             <span>行李準備進度</span>
             <span id="packing-progress-text">0 / 0 (0%)</span>
           </div>
           <div style="width:100%; height:8px; background:var(--bg-subtle); border-radius:4px; overflow:hidden;">
-            <div id="packing-progress-bar" style="width:0%; height:100%; background:linear-gradient(90deg, #10b981, #059669); transition:width 0.3s ease;"></div>
+            <div id="packing-progress-bar"
+              style="width:0%; height:100%; background:linear-gradient(90deg, #10b981, #059669); transition:width 0.3s ease;">
+            </div>
           </div>
         </div>
 
@@ -616,6 +636,7 @@
     </button>
   </nav>
 
-  <script src="./app.js?v=7"></script>
+  <script src="./app.js?v=8"></script>
 </body>
+
 </html>
