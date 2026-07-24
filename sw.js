@@ -1,4 +1,4 @@
-const CACHE_NAME = 'family-trip-v5';
+const CACHE_NAME = 'family-trip-v7';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
