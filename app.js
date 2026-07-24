@@ -245,7 +245,6 @@ function performSearch(query) {
           <div class="search-item-header">
             <span>👤 ${highlightedName}</span>
             ${m.phone !== '-' ? `<a href="tel:${m.phone}" class="btn-action btn-phone" style="margin-top:0;">📞 ${m.phone}</a>` : ''}
-          </div>
           <div class="search-item-detail">
             🛏️ 房間：<strong>${m.room || '詳見房間分配'}</strong>
           </div>
@@ -283,6 +282,7 @@ const defaultChecklist = [
   { id: '3', name: '太陽眼鏡 / 墨鏡', category: '☀️ 防曬抗暑', checked: false },
   { id: '4', name: '遮陽帽 / 大沿帽', category: '☀️ 防曬抗暑', checked: false },
   { id: '5', name: '攜帶型小風扇 / 涼感巾', category: '☀️ 防曬抗暑', checked: false },
+  { id: '25', name: '薄外套 / 防曬外套 (冷氣房與遮陽必備)', category: '☀️ 防曬抗暑', checked: false },
 
   // 💦 童玩節玩水
   { id: '6', name: '泳衣 / 泳褲', category: '💦 童玩節玩水', checked: false },
@@ -319,7 +319,13 @@ function getPackingList() {
   const saved = localStorage.getItem('family_packing_list_v1');
   if (saved) {
     try {
-      return JSON.parse(saved);
+      const list = JSON.parse(saved);
+      const hasJacket = list.some(item => item.name.includes('薄外套'));
+      if (!hasJacket) {
+        list.push({ id: '25', name: '薄外套 / 防曬外套 (冷氣房與遮陽必備)', category: '☀️ 防曬抗暑', checked: false });
+        savePackingList(list);
+      }
+      return list;
     } catch (e) {
       return defaultChecklist;
     }
