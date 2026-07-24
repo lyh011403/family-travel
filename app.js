@@ -511,10 +511,21 @@ async function fetchYilanWeather() {
 
     const current = data.current || {};
     const hourly = data.hourly || {};
+    const now = new Date();
+    const currentHourNum = now.getHours();
+
+    let startIndex = 0;
+    if (hourly.time) {
+      const idx = hourly.time.findIndex(t => {
+        const d = new Date(t);
+        return d.getHours() >= currentHourNum && d.getDate() === now.getDate();
+      });
+      if (idx !== -1) startIndex = idx;
+    }
 
     const curTemp = current.temperature_2m ? Math.round(current.temperature_2m) : 30;
     const curCode = current.weather_code !== undefined ? current.weather_code : 1;
-    const currentRainProb = hourly.precipitation_probability && hourly.precipitation_probability.length > 0 ? hourly.precipitation_probability[0] : 20;
+    const currentRainProb = hourly.precipitation_probability && hourly.precipitation_probability.length > startIndex ? hourly.precipitation_probability[startIndex] : 20;
 
     const info = getWeatherCodeInfo(curCode, currentRainProb);
 
@@ -525,8 +536,6 @@ async function fetchYilanWeather() {
 
     // Build 24-hour pills from current hour
     let pillsHtml = '';
-    const now = new Date();
-    const currentHourNum = now.getHours();
 
     if (hourly.time && hourly.temperature_2m && hourly.precipitation_probability) {
       const startIndex = Math.max(0, hourly.time.findIndex(t => {
