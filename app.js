@@ -70,6 +70,12 @@ subTabBtns.forEach((btn) => {
     if (activeDay) {
       activeDay.classList.add('active');
     }
+
+    // 平滑捲動至行程頂部以提升手機視覺反饋
+    const container = document.querySelector('.main-container');
+    if (container && window.scrollY > 120) {
+      window.scrollTo({ top: container.offsetTop - 70, behavior: 'smooth' });
+    }
   });
 });
 

@@ -333,6 +333,14 @@ body {
   background: var(--bg-card);
   color: var(--primary-dark);
   box-shadow: var(--shadow-sm);
+/* Day Sub-tab Content Toggle Fix */
+.day-content {
+  display: none;
+  animation: fadeIn 0.25s ease-in-out;
+}
+
+.day-content.active {
+  display: block;
 }
 
 /* Tab Views */
