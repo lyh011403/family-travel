@@ -475,4 +475,111 @@ document.addEventListener('DOMContentLoaded', () => {
       renderPackingList();
     });
   });
+
+  // Init Real-time Yilan Weather
+  fetchYilanWeather();
 });
+
+// ==================== YILAN LIVE WEATHER API & FORECAST ====================
+function getWeatherCodeInfo(code, rainProb = 0) {
+  if (code === 0) return { icon: '☀️', text: '晴朗無雲' };
+  if (code === 1 || code === 2) return { icon: '🌤️', text: '多雲晴朗' };
+  if (code === 3) return { icon: '⛅', text: '多雲時陰' };
+  if (code >= 45 && code <= 48) return { icon: '🌫️', text: '晨間霧氣' };
+  if (code >= 51 && code <= 65) return { icon: '🌧️', text: '短暫陣雨' };
+  if (code >= 80 && code <= 82) return { icon: '🌦️', text: '午後局部陣雨' };
+  if (code >= 95) return { icon: '⛈️', text: '雷陣雨' };
+  return rainProb > 30 ? { icon: '🌦️', text: '短暫陣雨' } : { icon: '🌤️', text: '多雲晴朗' };
+}
+
+async function fetchYilanWeather() {
+  const iconMain = document.getElementById('weather-icon-main');
+  const descEl = document.getElementById('weather-status-desc');
+  const tempEl = document.getElementById('weather-temp');
+  const rainBadge = document.getElementById('weather-rain-badge');
+  const hourlyStrip = document.getElementById('weather-hourly-strip');
+
+  if (!iconMain || !descEl || !tempEl || !hourlyStrip) return;
+
+  // Yilan Coordinates (Latitude 24.757, Longitude 121.753)
+  const apiUrl = 'https://api.open-meteo.com/v1/forecast?latitude=24.757&longitude=121.753&current=temperature_2m,relative_humidity_2m,weather_code&hourly=temperature_2m,precipitation_probability,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FTaipei';
+
+  try {
+    const res = await fetch(apiUrl);
+    if (!res.ok) throw new Error('Weather API HTTP Error');
+    const data = await res.json();
+
+    const current = data.current || {};
+    const hourly = data.hourly || {};
+
+    const curTemp = current.temperature_2m ? Math.round(current.temperature_2m) : 30;
+    const curCode = current.weather_code !== undefined ? current.weather_code : 1;
+    const currentRainProb = hourly.precipitation_probability && hourly.precipitation_probability.length > 0 ? hourly.precipitation_probability[0] : 20;
+
+    const info = getWeatherCodeInfo(curCode, currentRainProb);
+
+    iconMain.textContent = info.icon;
+    descEl.textContent = `${info.text} • 宜蘭五結/礁溪 (24H即時)`;
+    tempEl.textContent = `${curTemp}°C`;
+    rainBadge.textContent = `💧 降雨 ${currentRainProb}%`;
+
+    // Build 24-hour pills from current hour
+    let pillsHtml = '';
+    const now = new Date();
+    const currentHourNum = now.getHours();
+
+    if (hourly.time && hourly.temperature_2m && hourly.precipitation_probability) {
+      const startIndex = Math.max(0, hourly.time.findIndex(t => {
+        const d = new Date(t);
+        return d.getHours() >= currentHourNum;
+      }));
+
+      for (let i = startIndex; i < Math.min(startIndex + 24, hourly.time.length); i += 2) {
+        const timeObj = new Date(hourly.time[i]);
+        const hourLabel = `${String(timeObj.getHours()).padStart(2, '0')}:00`;
+        const temp = Math.round(hourly.temperature_2m[i]);
+        const rain = hourly.precipitation_probability[i] || 0;
+        const code = hourly.weather_code[i] || 1;
+        const hInfo = getWeatherCodeInfo(code, rain);
+        const isCurrent = timeObj.getHours() === currentHourNum;
+
+        pillsHtml += `
+          <div class="weather-hour-pill ${isCurrent ? 'active' : ''}">
+            <div class="weather-hour-time">${hourLabel}</div>
+            <span class="weather-hour-icon">${hInfo.icon}</span>
+            <div class="weather-hour-temp">${temp}°C</div>
+            <div class="weather-hour-rain">💧 ${rain}%</div>
+          </div>
+        `;
+      }
+    }
+
+    hourlyStrip.innerHTML = pillsHtml;
+
+  } catch (err) {
+    console.warn('Yilan weather fetch fallback mode:', err);
+    // Graceful Fallback if offline
+    iconMain.textContent = '🌤️';
+    descEl.textContent = '多雲晴朗 • 宜蘭五結/礁溪 (離線預報)';
+    tempEl.textContent = '31°C';
+    rainBadge.textContent = '💧 降雨 20%';
+
+    const fallbackHours = ['09:00', '11:00', '13:00', '15:00', '17:00', '19:00', '21:00'];
+    const fallbackIcons = ['☀️', '🌤️', '⛅', '🌦️', '🌤️', '🌙', '🌙'];
+    const fallbackTemps = ['29°C', '32°C', '33°C', '31°C', '29°C', '27°C', '26°C'];
+    const fallbackRains = ['10%', '15%', '20%', '35%', '20%', '10%', '10%'];
+
+    let pillsHtml = '';
+    fallbackHours.forEach((time, index) => {
+      pillsHtml += `
+        <div class="weather-hour-pill ${index === 2 ? 'active' : ''}">
+          <div class="weather-hour-time">${time}</div>
+          <span class="weather-hour-icon">${fallbackIcons[index]}</span>
+          <div class="weather-hour-temp">${fallbackTemps[index]}</div>
+          <div class="weather-hour-rain">💧 ${fallbackRains[index]}</div>
+        </div>
+      `;
+    });
+    hourlyStrip.innerHTML = pillsHtml;
+  }
+}
